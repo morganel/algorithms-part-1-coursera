@@ -1,0 +1,43 @@
+difference in memory for defining the minPQ as instance variable vs local variable define in constructor  is huge.
+
+
+private SearchNode solutionNode;
+    private SearchNode solutionNodeTwin;
+        
+    public Solver(Board initial) {          // find a solution to the initial board (using the A* algorithm)
+        if (initial == null) {
+            throw new java.lang.NullPointerException("Board input to solver cannot be null");
+        }
+        if (initial.isGoal()) {
+            solutionNode = new SearchNode(initial, null);
+        } else {
+        
+            MinPQ<SearchNode> minPQ = new MinPQ<SearchNode>();
+            MinPQ<SearchNode> minPQTwin = new MinPQ<SearchNode>();
+
+
+VS
+
+
+
+   private SearchNode solutionNode;
+    private SearchNode solutionNodeTwin;
+     
+    private MinPQ<SearchNode> minPQ = new MinPQ<SearchNode>();
+    private MinPQ<SearchNode> minPQTwin = new MinPQ<SearchNode>();
+    
+    public Solver(Board initial) {          // find a solution to the initial board (using the A* algorithm)
+        if (initial == null) {
+            throw new java.lang.NullPointerException("Board input to solver cannot be null");
+        }
+        if (initial.isGoal()) {
+            solutionNode = new SearchNode(initial, null);
+        } else {
+        
+
+                        
+            SearchNode initialSearchNodeTwin = new SearchNode(initial.twin(), null);
+            SearchNode initialSearchNode = new SearchNode(initial, null);
+
+
+It should be defined in Solver constructor (Solver = 5408 bytes v.s 350896 bytes)
