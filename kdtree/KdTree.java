@@ -154,6 +154,7 @@ public class KdTree {
         if (rect == null) {
             throw new java.lang.NullPointerException("cannot get range of null rectangle");
         }
+        if (isEmpty()) return new ArrayList<Point2D>();
         range(root, rect, rangeMatches);
         return rangeMatches;
     }
@@ -163,6 +164,8 @@ public class KdTree {
         if (p == null) {
             throw new java.lang.NullPointerException("cannot get nearest of null point");
         }
+        
+        if (isEmpty()) return null;
         double minDist = Double.POSITIVE_INFINITY;
         
         return nearest(p, root, Double.POSITIVE_INFINITY, root.p, 0);
@@ -190,7 +193,7 @@ public class KdTree {
         if ((level % 2) == 0) cmp = p.x() - n.p.x();
         else cmp = p.y() - n.p.y();
 
-        System.out.println("cmp:" + cmp);
+        // System.out.println("cmp:" + cmp);
         
         if (cmp < 0) { 
             currentPoint = nearest(p, n.lb, closestDistance, closestPoint, level + 1);
@@ -242,6 +245,12 @@ public class KdTree {
         Point2D p2 = new Point2D(0.2, 0.3);
         System.out.println(kdtree.contains(p2));
         System.out.println(kdtree.contains(p));
+        
+        KdTree kdtree2 = new KdTree();
+        System.out.println(kdtree2.contains(p));
+        RectHV rect = new RectHV(0., 0., 1., 1.);
+        kdtree2.range(rect);
+        
     }
 }
 
